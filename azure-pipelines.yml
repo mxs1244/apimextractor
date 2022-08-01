@@ -29,6 +29,7 @@ trigger:
     PathtoPublish: 'C:\Users\v-mosh21\Desktop\apim-extract'
     ArtifactName: 'moshi-pipe'
     publishLocation: 'Container'
+
 - master
 
 pool:

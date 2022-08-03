@@ -4,6 +4,9 @@
   "parameters": {
     "apimServiceName": {
       "type": "string"
+    },
+    "serviceUrl": {
+      "type": "object"
     }
   },
   "resources": [
@@ -24,7 +27,7 @@
         "isCurrent": true,
         "subscriptionRequired": true,
         "displayName": "Echo API",
-        "serviceUrl": "http://echoapi.cloudapp.net/api",
+        "serviceUrl": "[parameters('serviceUrl').echoapi]",
         "path": "echo",
         "protocols": [
           "https"
@@ -49,7 +52,7 @@
         "isCurrent": true,
         "subscriptionRequired": true,
         "displayName": "service fabric API",
-        "serviceUrl": "http://apiapplication.eastasia.cloudapp.azure.com:19000",
+        "serviceUrl": "[parameters('serviceUrl').servicefabricapi]",
         "path": "api",
         "protocols": [
           "https"

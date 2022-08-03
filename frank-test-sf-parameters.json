@@ -2,8 +2,25 @@
   "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
+<<<<<<< HEAD
     "apimServiceName1": {
       "value": "sharedapim-sub15"
+=======
+    "apimServiceName": {
+      "value": "moshidemoapim"
+    },
+    "namedValues": {
+      "value": {}
+    },
+    "namedValueKeyVaultSecrets": {
+      "value": {}
+    },
+    "serviceUrl": {
+      "value": {
+        "echoapi": "http://echoapi.cloudapp.net/api",
+        "servicefabricapi": "http://apiapplication.eastasia.cloudapp.azure.com:19000"
+      }
+>>>>>>> f3796e2 (add extracted *.json files to devops repository)
     }
   },
   "resources": []

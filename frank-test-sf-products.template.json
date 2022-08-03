@@ -4,6 +4,9 @@
   "parameters": {
     "apimServiceName": {
       "type": "string"
+    },
+    "serviceUrl": {
+      "type": "object"
     }
   },
   "resources": [

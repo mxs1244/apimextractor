@@ -32,7 +32,7 @@
         },
         "tls": {
           "validateCertificateChain": false,
-          "validateCertificateName": true
+          "validateCertificateName": false
         },
         "url": "fabric:/ApiApplication/WebApiService",
         "protocol": "http"

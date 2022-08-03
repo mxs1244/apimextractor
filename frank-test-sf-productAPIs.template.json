@@ -11,6 +11,7 @@
       "apiVersion": "2021-08-01",
       "type": "Microsoft.ApiManagement/service/products/apis",
       "name": "[concat(parameters('apimServiceName'), '/starter/echo-api')]",
+      "dependsOn": [],
       "properties": {
         "displayName": "Starter",
         "description": "Subscribers will be able to run 5 calls/minute up to a maximum of 100 calls/week.",
@@ -23,6 +24,9 @@
       "apiVersion": "2021-08-01",
       "type": "Microsoft.ApiManagement/service/products/apis",
       "name": "[concat(parameters('apimServiceName'), '/unlimited/service-fabric-api')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.ApiManagement/service/products/apis', parameters('apimServiceName'), 'starter', 'echo-api')]"
+      ],
       "properties": {
         "displayName": "Unlimited",
         "description": "Subscribers have completely unlimited access to the API. Administrator approval is required.",

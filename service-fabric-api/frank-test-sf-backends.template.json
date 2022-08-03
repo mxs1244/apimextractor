@@ -1,0 +1,42 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "apimServiceName": {
+      "type": "string"
+    }
+  },
+  "resources": [
+    {
+      "apiVersion": "2021-08-01",
+      "type": "Microsoft.ApiManagement/service/backends",
+      "name": "[concat(parameters('apimServiceName'), '/sf-backend')]",
+      "properties": {
+        "description": "Test Service Fabric backend",
+        "properties": {
+          "serviceFabricCluster": {
+            "clientCertificatethumbprint": "6934AD98EDD053CBF85A03CBE38F4B88EA1962F4",
+            "maxPartitionResolutionRetries": 1,
+            "managementEndpoints": [
+              "https://apiapplication.eastasia.cloudapp.azure.com:19080"
+            ],
+            "serverCertificateThumbprints": [
+              "80E0896AF8D7F96698EA382E231E8D9600950874"
+            ],
+            "serverX509Names": []
+          }
+        },
+        "credentials": {
+          "query": {},
+          "header": {}
+        },
+        "tls": {
+          "validateCertificateChain": false,
+          "validateCertificateName": false
+        },
+        "url": "fabric:/ApiApplication/WebApiService",
+        "protocol": "http"
+      }
+    }
+  ]
+}

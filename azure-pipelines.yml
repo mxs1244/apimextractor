@@ -1,45 +1,23 @@
-# Starter pipeline
-trigger:
-- task: AzureFileCopy@4
-  inputs:
-    SourcePath: 'C:\Users\v-mosh21\Desktop\apim-extract'
-    azureSubscription: 'MAIC - Wicresoft - Azure - 15-2(a2d49d28-b5b1-48fe-83dc-ada50a035a99)'
-    Destination: 'AzureBlob'
-    storage: 'moshisa'
-    ContainerName: 'pipeline'
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-- task: AzureResourceManagerTemplateDeployment@3
-  inputs:
-    deploymentScope: 'Resource Group'
-    azureResourceManagerConnection: 'MAIC - Wicresoft - Azure - 15-2(a2d49d28-b5b1-48fe-83dc-ada50a035a99)'
-    subscriptionId: 'a2d49d28-b5b1-48fe-83dc-ada50a035a99'
-    action: 'Create Or Update Resource Group'
-    resourceGroupName: 'sharedresources'
-    location: 'Southeast Asia'
-    templateLocation: 'Linked artifact'
-    csmFile: 'C:\Users\v-mosh21\Desktop\apim-extract\frank-test-sf-api-management-service.template.json'
-    csmParametersFile: 'C:\Users\v-mosh21\Desktop\apim-extract\frank-test-sf-parameters.json'
-    deploymentMode: 'Validation'
-    deploymentName: 'moshipipelinedeployment'
-
-- task: PublishBuildArtifacts@1
-  inputs:
-    PathtoPublish: 'C:\Users\v-mosh21\Desktop\apim-extract'
-    ArtifactName: 'moshi-pipe'
-    publishLocation: 'Container'
-
-- master
-
 pool:
-  vmImage: ubuntu-latest
+  vmImage: 'ubuntu-latest'
+trigger:
+  none
+
+variables:
+- name: one
+  value: East US 
+- name: two
+  value: frank-test-sf-api-management-service.template.json
+- name: three
+  value: frank-test-sf-parameters.json 
 
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
-
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+- task: AzureResourceManagerTemplateDeployment@3
+  displayName: 'ARM Template deployment: Resource Group scope'
+  inputs:
+    azureResourceManagerConnection: moshidevopsconnection
+    subscriptionId: 'a2d49d28-b5b1-48fe-83dc-ada50a035a99'
+    resourceGroupName: moshidevopsconnection
+    location: $(one)
+    csmFile: $(two)
+    csmParametersFile: $(three)

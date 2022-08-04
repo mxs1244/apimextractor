@@ -1,0 +1,150 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "apimServiceName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name of the API Management"
+      }
+    },
+    "linkedTemplatesBaseUrl": {
+      "type": "string",
+      "metadata": {
+        "description": "Base URL of the repository that contains the generated templates"
+      }
+    },
+    "linkedTemplatesSasToken": {
+      "type": "string",
+      "metadata": {
+        "description": "The Shared Access Signature for the URL of the repository"
+      }
+    },
+    "serviceUrl": {
+      "type": "object",
+      "metadata": {
+        "description": "Service url for each Api"
+      }
+    }
+  },
+  "resources": [
+    {
+      "apiVersion": "2022-01-01",
+      "type": "Microsoft.Resources/deployments",
+      "name": "globalServicePolicyTemplate",
+      "dependsOn": [],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[concat(parameters('linkedTemplatesBaseUrl'), 'frank-test-sf-globalServicePolicy.template.json', parameters('linkedTemplatesSasToken'))]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "apimServiceName": {
+            "value": "[parameters('apimServiceName')]"
+          }
+        }
+      }
+    },
+    {
+      "apiVersion": "2022-01-01",
+      "type": "Microsoft.Resources/deployments",
+      "name": "productsTemplate",
+      "dependsOn": [],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[concat(parameters('linkedTemplatesBaseUrl'), 'frank-test-sf-products.template.json', parameters('linkedTemplatesSasToken'))]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "apimServiceName": {
+            "value": "[parameters('apimServiceName')]"
+          }
+        }
+      }
+    },
+    {
+      "apiVersion": "2022-01-01",
+      "type": "Microsoft.Resources/deployments",
+      "name": "backendsTemplate",
+      "dependsOn": [],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[concat(parameters('linkedTemplatesBaseUrl'), 'frank-test-sf-backends.template.json', parameters('linkedTemplatesSasToken'))]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "apimServiceName": {
+            "value": "[parameters('apimServiceName')]"
+          }
+        }
+      }
+    },
+    {
+      "apiVersion": "2022-01-01",
+      "type": "Microsoft.Resources/deployments",
+      "name": "apisTemplate",
+      "dependsOn": [
+        "[resourceId('Microsoft.Resources/deployments', 'globalServicePolicyTemplate')]",
+        "[resourceId('Microsoft.Resources/deployments', 'productsTemplate')]",
+        "[resourceId('Microsoft.Resources/deployments', 'backendsTemplate')]"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[concat(parameters('linkedTemplatesBaseUrl'), 'frank-test-sf-service-fabric-api-api.template.json', parameters('linkedTemplatesSasToken'))]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "apimServiceName": {
+            "value": "[parameters('apimServiceName')]"
+          },
+          "serviceUrl": {
+            "value": "[parameters('serviceUrl')]"
+          }
+        }
+      }
+    },
+    {
+      "apiVersion": "2022-01-01",
+      "type": "Microsoft.Resources/deployments",
+      "name": "productAPIsTemplate",
+      "dependsOn": [
+        "[resourceId('Microsoft.Resources/deployments', 'productsTemplate')]",
+        "[resourceId('Microsoft.Resources/deployments', 'apisTemplate')]"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[concat(parameters('linkedTemplatesBaseUrl'), 'frank-test-sf-productAPIs.template.json', parameters('linkedTemplatesSasToken'))]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "apimServiceName": {
+            "value": "[parameters('apimServiceName')]"
+          }
+        }
+      }
+    },
+    {
+      "apiVersion": "2022-01-01",
+      "type": "Microsoft.Resources/deployments",
+      "name": "groupsTemplate",
+      "dependsOn": [],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[concat(parameters('linkedTemplatesBaseUrl'), 'frank-test-sf-groups.template.json', parameters('linkedTemplatesSasToken'))]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "apimServiceName": {
+            "value": "[parameters('apimServiceName')]"
+          }
+        }
+      }
+    }
+  ]
+}

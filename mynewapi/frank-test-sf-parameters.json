@@ -5,11 +5,11 @@
     "apimServiceName": {
       "value": "moshidemoapim"
     },
-    "namedValues": {
-      "value": {}
+    "linkedTemplatesBaseUrl": {
+      "value": "https://moshisa.blob.core.windows.net/apimextractor"
     },
-    "namedValueKeyVaultSecrets": {
-      "value": {}
+    "linkedTemplatesSasToken": {
+      "value": "xx"
     },
     "serviceUrl": {
       "value": {

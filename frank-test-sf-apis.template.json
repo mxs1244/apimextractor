@@ -30,7 +30,7 @@
         "serviceUrl": "[parameters('serviceUrl').echoapi]",
         "path": "echo",
         "protocols": [
-          "http"
+          "https"
         ]
       }
     },
